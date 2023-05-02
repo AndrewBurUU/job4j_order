@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import org.aspectj.weaver.ast.*;
 import org.springframework.stereotype.Service;
 import ru.job4j.order.model.*;
-import ru.job4j.order.repository.OrderRepository;
+import ru.job4j.order.repository.*;
 
 import javax.transaction.*;
 import java.util.*;
@@ -14,6 +14,7 @@ import java.util.*;
 public class SpringOrderService implements OrderService {
 
     private final OrderRepository orderRepository;
+    private final OrderDTORepository orderDTORepository;
 
     @Override
     @Transactional
@@ -46,5 +47,9 @@ public class SpringOrderService implements OrderService {
     @Override
     public Collection<Order> findAll() {
         return orderRepository.findAll();
+    }
+
+    public Optional<OrderDTO> findById(int id) {
+        return orderDTORepository.findById(id);
     }
 }

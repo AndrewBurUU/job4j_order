@@ -49,4 +49,15 @@ public class OrderController {
         return ResponseEntity.badRequest().build();
     }
 
+    @GetMapping("/order/{id}")
+    public ResponseEntity<OrderDTO> findOrder(@PathVariable int id) {
+        var orderDTO = orderService.findById(id);
+        return new ResponseEntity<OrderDTO>(
+                orderDTO.orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Order is not found. Please, check requisites."
+                )),
+                orderDTO.isPresent() ? HttpStatus.OK : HttpStatus.NOT_FOUND
+        );
+    }
+
 }
