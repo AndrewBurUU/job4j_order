@@ -18,19 +18,4 @@ public class Order {
 
     @Column(name = "dish_id")
     private int dishId;
-
-    /**
-    private int clientId;
-
-    private int dishCount;
-
-    private String address;
-
-    private String telephoneNumber;
-
-    private Date orderDate;
-
-    private int orderNumber;
-
-    private String status;*/
 }

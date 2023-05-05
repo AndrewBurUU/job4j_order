@@ -29,7 +29,6 @@ public class Main extends SpringBootServletInitializer {
 
     @Bean
     public RestTemplate restTemplate(RestTemplateBuilder builder) {
-        // Do any additional configuration here
         return builder.build();
     }
 
