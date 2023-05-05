@@ -10,14 +10,17 @@ import java.util.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "orderX")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private int clientId;
+    @Column(name = "dish_id")
+    private int dishId;
 
-    private int dishCode;
+    /**
+    private int clientId;
 
     private int dishCount;
 
@@ -29,5 +32,5 @@ public class Order {
 
     private int orderNumber;
 
-    private String status;
+    private String status;*/
 }

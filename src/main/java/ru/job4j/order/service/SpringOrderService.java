@@ -2,6 +2,7 @@ package ru.job4j.order.service;
 
 import lombok.AllArgsConstructor;
 import org.aspectj.weaver.ast.*;
+import org.springframework.kafka.core.*;
 import org.springframework.stereotype.Service;
 import ru.job4j.order.model.*;
 import ru.job4j.order.repository.*;
@@ -13,13 +14,16 @@ import java.util.*;
 @AllArgsConstructor
 public class SpringOrderService implements OrderService {
 
+    private final KafkaTemplate<String, Object> kafkaTemplate;
     private final OrderRepository orderRepository;
     private final OrderDTORepository orderDTORepository;
 
     @Override
     @Transactional
     public Order create(Order order) {
-        return orderRepository.save(order);
+        var savedOrder = orderRepository.save(order);
+        kafkaTemplate.send("job4j_orders", savedOrder);
+        return savedOrder;
     }
 
     @Override
@@ -49,7 +53,7 @@ public class SpringOrderService implements OrderService {
         return orderRepository.findAll();
     }
 
-    public Optional<OrderDTO> findById(int id) {
+    public Optional<Order> findById(int id) {
         return orderDTORepository.findById(id);
     }
 }
