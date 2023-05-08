@@ -1,7 +1,9 @@
 package ru.job4j.order.service;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.weaver.ast.*;
+import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.*;
 import org.springframework.stereotype.Service;
 import ru.job4j.order.model.*;
@@ -12,6 +14,7 @@ import java.util.*;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class SpringOrderService implements OrderService {
 
     private final KafkaTemplate<String, Object> kafkaTemplate;
@@ -22,7 +25,8 @@ public class SpringOrderService implements OrderService {
     @Transactional
     public Order create(Order order) {
         var savedOrder = orderRepository.save(order);
-        kafkaTemplate.send("job4j_orders", savedOrder);
+        /**kafkaTemplate.send("job4j_orders", savedOrder);*/
+        kafkaTemplate.send("preorder", savedOrder);
         return savedOrder;
     }
 
@@ -56,4 +60,10 @@ public class SpringOrderService implements OrderService {
     public Optional<Order> findById(int id) {
         return orderDTORepository.findById(id);
     }
+
+    @KafkaListener(topics = "cooked_order")
+    public void receiveOrder(String message) {
+        log.debug(message);
+    }
+
 }
