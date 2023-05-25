@@ -28,4 +28,4 @@
 3. Клиент отправляет заказ.
 
 # Контакты
-mymail@gmail.com.
+andrew76k@rambler.ru
