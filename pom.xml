@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>ru.job4j</groupId>
 	<artifactId>job4j_order</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0</version>
 	<name>job4j_order</name>
 	<description>Job4j Microservices Demo Order Service</description>
 

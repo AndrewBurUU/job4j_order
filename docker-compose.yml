@@ -1,0 +1,24 @@
+version: "3.9"
+services:
+  db:
+    image: postgres
+    container_name: db
+    environment:
+      - POSTGRES_PASSWORD=compose-postgres
+      - POSTGRES_USER=compose-postgres
+      - POSTGRES_DB=order
+      - PGDATA=/var/lib/postgresql/data
+    volumes:
+      - ./db/shortcut/data:/var/lib/postgresql/data
+    restart: always
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/order
+      - SPRING_DATASOURCE_USERNAME=compose-postgres
+      - SPRING_DATASOURCE_PASSWORD=compose-postgres
+    container_name: order
+    depends_on:
+      - db
